@@ -1,0 +1,152 @@
+\documentclass{sotonthesis}
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{graphicx}
+\graphicspath{{./img/}}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{decorations,decorations.pathmorphing,decorations.markings,external,arrows}
+%\tikzexternalize[prefix=tikz/,up to date check=diff]
+\tikzset{external/optimize=false}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[figure,table]{totalcount}
+
+\numberwithin{equation}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Extra packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If you need any extra LaTeX packages in your thesis, list them here.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Basic Information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% These definitions are used in the title page, abstract page,
+% and on the authorship declaration, as well as in the headers
+% on pages throughout the thesis.
+
+\title{Baby's First PhD Thesis Template}
+\author{Joseph Bloggs}
+
+% Month and year of submission
+\date{Smarch 20xx}
+
+\supervisor{John Smith}
+\degree{Doctor of Philosophy}
+\university{University of Southampton}
+\faculty{Faculty of Social, Human and Mathematical Sciences}
+\academicunit{Mathematical Sciences}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The ordering of materials in the thesis are, according to paragraph
+% 30 of the official guidance:
+% 
+% - Title and subtitle
+% - Abstract
+% - List of contents
+% - List of tables, illustrations, etc
+% - List of accompanying materials, if any
+% - Author's declaration
+% - Acknowledgements
+% - Definitions, abbrevitations used
+% - Introduction
+% - Main text, divided into chapters, sections, etc
+% - Conclusions
+% - Appendicies
+% - Glossary
+% - Bibliography
+% - Index
+
+\makeatletter
+\renewcommand{\@pnumwidth}{2em}
+\makeatother
+
+\begin{document}
+\pagestyle{empty}
+\frontmatter
+
+% Title and subtitle
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{abstract}
+\input{./frontmatter/abstract.tex}
+\end{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+
+% List of contents
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+\cleardoublepage{}
+
+% List of figures and tables
+\iftotalfigures{}
+  \phantomsection{}
+  \addcontentsline{toc}{chapter}{List of Figures and Tables}  
+  \listoffigures
+  \cleardoublepage{}
+\fi
+
+
+\pagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Authorship declaration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\authorshipdeclaration{\input{./frontmatter/authorship-references.tex}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%% Acknowledgements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\acknowledgements{\input{./frontmatter/acknowledgements.tex}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Definitions, abbreviations used
+\pagestyle{fancy}
+\setlength{\parskip}{1.3em}
+
+% Main matter
+\mainmatter{}
+\raggedbottom{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Thesis chapters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{./sections/introduction}
+
+\input{./sections/sample-chapter}
+\appsection{}
+\input{./sections/sample-chapter-appendix}
+
+\input{./sections/sample-chapter-2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\cleardoublepage{}
+\phantomsection{}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Bibliography style and sources
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{JHEP2}
+\bibliography{refs/refs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+%%% Local Variables:
+%%% TeX-master-file: t
+%%% reftex-bibpath-environment-variables: ("./refs/")
+%%% End:

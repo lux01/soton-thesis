@@ -1,0 +1,282 @@
+%% This is the thesis class to generate a thesis that
+%% conforms to the official "Guidance for Completion
+%% of Research Degree" document (last revision Dec '15)
+
+% chktex-file 1
+% chktex-file 11
+% chktex-file 26
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{sotonthesis}[2016/05/13 v1.0]
+
+\newif\if@thesisline
+\newif\if@thesisdraft
+
+\DeclareOption{thesisline}{
+  \@thesislinetrue
+}
+\DeclareOption{nothesisline}{
+  \@thesislinefalse
+}
+\DeclareOption{draft}{
+  \@thesisdrafttrue
+}
+\DeclareOption{final}{
+  \@thesisdraftfalse
+}
+
+\ExecuteOptions{thesisline,final}
+\ProcessOptions\relax
+    
+% The base class for a thesis is a book. The regulations
+% require this to be double sided on A4 paper and with at
+% least 11pt font. It also requires that new chapters
+% begin on the right hand page.
+\def\baseclass{book}
+\PassOptionsToClass{a4paper}{\baseclass}
+\PassOptionsToClass{twoside}{\baseclass}
+\PassOptionsToClass{11pt}{\baseclass}
+\PassOptionsToClass{openright}{\baseclass}
+\if@thesisdraft
+\PassOptionsToClass{draft}{\baseclass}
+\fi
+\LoadClass{\baseclass}
+
+\if@thesisdraft
+\overfullrule=2cm
+\fi
+
+% The default headers aren't too nice, use fancyhdr instead
+\RequirePackage{fancyhdr}
+\fancyhead{} % Clear all header fields
+\fancyhead[RE]{\textit{\nouppercase\leftmark}}
+\fancyhead[LO]{\textit{\nouppercase\rightmark}}
+\fancyhead[RO,LE]{\thepage}
+\fancyfoot{}
+
+% Regulations require that the text be one and a half spaced
+\RequirePackage{setspace}
+\onehalfspacing{}
+
+% "Let's use a custom font," he said. "It'll be fun!", he said.
+\RequirePackage{fontspec}
+\RequirePackage{quattrocento}
+\setmathrm{Latin Modern Roman}
+\setmathsf{Latin Modern Sans}
+\setmathtt{Latin Modern Mono}
+\setboldmathrm{Latin Modern Roman}
+
+% Margins at the binding (inner) edge must not be less than 40mm, and other
+% margins must not be less than 15mm
+\RequirePackage[a4paper, includeheadfoot, inner=40mm, outer=20mm, top=20mm, bottom=20mm]{geometry}
+\RequirePackage{amsmath,amsfonts,amssymb,amsthm}
+
+% Define some custom referencing commands to ensure that
+% thigs are referenced with the correct style and spacing.
+\newcommand{\fref}[1]{Figure~\ref{#1}}
+\newcommand{\tref}[1]{Table~\ref{#1}}
+\newcommand{\cref}[1]{Chapter~\ref{#1}}
+\newcommand{\sref}[1]{Section~\ref{#1}}
+\newcommand{\aref}[1]{Appednix~\ref{#1}}
+
+% Make tables act like figures for counting purposes
+\def\table{\def\figurename{Table}\figure}
+\let\endtable\endfigure
+
+% The date on a thesis title page must be the month and year
+\def\today{\ifcase\month\or
+  January \or February \or March \or April \or May \or June \or
+  July \or August \or September \or October \or November \or December \fi \number\year}
+
+% Define some commands used in the required thesis front matter
+\newcommand*{\supervisor}[1]{\def\supname{#1}}
+\newcommand*{\degree}[1]{\def\degreename{#1}}
+\newcommand*{\academicunit}[1]{\def\auname{#1}}
+\newcommand*{\university}[1]{\def\uniname{#1}}
+\newcommand*{\faculty}[1]{\def\facultyname{#1}}
+\newcommand*{\volume}[1]{\def\volumestr{#1}}
+
+% The thesis requires a specific title page
+\renewcommand\maketitle{
+  \hypersetup{pdftitle={\@title}}
+  \hypersetup{pdfauthor={\@author}}
+  \thispagestyle{empty}
+  \begin{titlepage}
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Title Page}
+    \begin{center}
+      {\Large{\textbf{\MakeUppercase{\uniname}}}}
+
+      \vskip 10pt
+
+      {\large{\MakeUppercase{\facultyname}}}
+
+      \vskip 10pt
+
+      {\large{\auname}}
+
+      \vskip 190pt
+
+      {\large{\textbf{\@title}}}
+
+      \vskip 15pt
+
+      {\large by}
+
+      \vskip 15pt
+
+      {\large{\textbf{\@author}}}
+
+      \vskip 190pt
+
+      \if@thesisline
+      {\large{Thesis for the degree of {\degreename}}}
+      \fi
+      
+      \vskip 15pt
+
+      {\large \@date}
+    \end{center}
+  \end{titlepage}
+  \cleardoublepage}
+
+% A thesis is required to have an abstract
+\newenvironment{abstract}
+{
+  \phantomsection
+  \addcontentsline{toc}{chapter}{Abstract}
+  \thispagestyle{empty}
+  \begin{center}
+    {\normalsize\textbf{\MakeUppercase{\uniname}}}
+    
+    \vskip 5pt
+
+    {\Large\textbf{\underline{ABSTRACT}}}
+
+    \vskip 5pt
+
+    {\normalsize \MakeUppercase{\facultyname}}
+
+    \vskip 5pt
+
+    {\normalsize \auname}
+
+    \vskip 5pt
+
+    \if@thesisline
+    {\normalsize \underline{Thesis for the degree of \degreename}}
+    \fi
+    
+    \vskip 5pt
+
+    {\normalsize \textbf{\MakeUppercase{\@title}}}
+
+    {\normalsize by \@author}
+  \end{center}
+}{\cleardoublepage}
+
+% A thesis is required to have a declaration of authorship.
+\newcommand\authorshipdeclaration[1]{
+  \thispagestyle{empty}
+  \phantomsection
+  \addcontentsline{toc}{chapter}{Declaration of Authorship}
+  \begin{center}
+    {\Large\textbf{Declaration of Authorship}}
+
+  \end{center}
+
+  I, {\@author}, declare that the thesis entitled \emph{\@title} and the work presented
+  in the thesis are both my own, and have been generated by me as the result of my own
+  original research. I confirm that:
+
+  \begin{itemize}
+    \item this work was done wholly or mainly while in candidature for a research degree
+    at this University;
+    \item where any part of this thesis has previously been submitted for a degree or any
+    other qualification at this University or any other institution, this has been clearly
+    stated;
+    \item where I have consulted the published work of others, this is always clearly
+    attributed;
+    \item where I have quoted form the work of others, the source is always given. With
+    the exception of such quotations, this thesis is entirely my own work;
+    \item I have acknowledged all main sources of help;
+    \item where the thesis is based on work done by myself jointly with others, I have
+    made clear exactly what was done by others and what I have contributed myself;
+    \item parts of this work have been published as: #1
+  \end{itemize}
+
+  \vskip 15mm
+
+  Signed: ..................................................................................................................................
+
+  Date: .......................................................................................................................................
+  \cleardoublepage
+}
+
+% We also need an acknowledgements section
+\newcommand\acknowledgements[1]{
+  \phantomsection
+  \addcontentsline{toc}{chapter}{Acknowledgements}
+  \chapter*{Acknowledgements}
+  %\thispagestyle{empty}
+  %\begin{center}{\Large\textbf{Acknowledgements}}\end{center}
+  \setlength{\parindent}{0pt}
+  \setlength{\parskip}{1em}
+  #1
+
+  \cleardoublepage
+}
+
+% We want a deep table of contents depth
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% We want to number equations, figures, etc with the section
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+% Hyperref is amazing
+\RequirePackage[
+    final,
+    colorlinks=true,
+    plainpages=true,
+    linkcolor={black},
+    citecolor={black},
+    urlcolor={black},
+    pdfstartview={FitV},
+    unicode,
+    breaklinks=true,
+    pdfpagelabels
+]{hyperref}
+
+\RequirePackage{bibentry}
+\nobibliography*
+
+% The default names of the toc, etc are not good enough
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
+
+% Apparently normal tables are ugly
+\RequirePackage{booktabs}
+
+% Enable us to put appendices at the end of a chapter
+\RequirePackage{etoolbox}
+\pretocmd{\chapter}{
+  \renewcommand\theHsection{\thechapter.\arabic{section}}
+  \renewcommand\thesection{\thechapter.\arabic{section}}}{}{}
+
+\newcommand\appsection{%
+  \setcounter{section}{0}%
+  \renewcommand\theHsection{\thechapter.\Alph{section}}
+  \renewcommand\thesection{\thechapter.\Alph{section}}}
+
+
+\RequirePackage[Sonny]{fncychap}
+
+
+% Similarly "it should be clear where a new paragraph is starting"
+\RequirePackage{parskip}
+\setlength{\parindent}{1em}
+\raggedbottom{}
