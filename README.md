@@ -2,6 +2,10 @@
 
 The University of Southampton has a number of requirements for the typesetting of theses for the completion of doctoral research degrees, as well as for the MPhil degree. These requirements are outlined in the document [_Guidance for Completion of Research Degrees_][guidance-pdf] (GCRD). The University provides an official [Microsoft Word template][word-template], and the Faculty of Physical Sciences & Engineering has developed a similar [LaTeX template][fpse-template], however it is not clear whether said template has been updated recently.
 
+[guidance-pdf]: http://www.southampton.ac.uk/assets/imported/transforms/content-block/UsefulDownloads_Download/517D75032E6A44A39CCD03DF8F5FE1B2/Guidance%20for%20Completion%20of%20Research%20Degree.pdf
+[word-template]: http://library.soton.ac.uk/thesis/templates
+[fpse-template]: http://www.gradschool.fpse.soton.ac.uk/students/submission
+
 This repository provides both a LaTeX class, `sotonthesis.cls`, which conforms to requirements of the GCRD (as of May 2016), but also a structured project to aid in help make the process of writing a thesis more organised. The class can also be used as an _Annual Progress Report_ template by passing the optional argument `nothesisline` to the class:
 ```LaTeX
 \documentclass[nothesisline]{sotonthesis}
@@ -62,9 +66,4 @@ In the _Thesis chapters_ section you should use the LaTeX `\input` command to in
 
 ## License
 
-This template is published under the [Unlicese][unlicese]
-
-[guidance-pdf]: ./Guidance for Completion of Research Degree.pdf
-[word-template]: http://library.soton.ac.uk/thesis/templates
-[fpse-template]: http://www.gradschool.fpse.soton.ac.uk/students/submission
-[unlicense]: ./UNLICENSE
+This template is published under the [Unlicese](./UNLICENSE).
