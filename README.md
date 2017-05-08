@@ -64,6 +64,13 @@ The _Abstract_, _Authorship declaration_ and _Acknowledgement_ sections only req
 
 In the _Thesis chapters_ section you should use the LaTeX `\input` command to include you thesis chapters. The command `\appsection{}` can be used to mark subsequent sections as appendicies to the current chapter until a new chapter is started.
 
+## Word count
+
+If you want to determine how many words, figures, equations, etc. you have used you can use the program `texcount`:
+```Bash
+texcount -inc thesis.tex
+```
+
 ## License
 
 This template is published under the [Unlicese](./UNLICENSE).
